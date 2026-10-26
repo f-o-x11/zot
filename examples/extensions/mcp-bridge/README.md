@@ -364,9 +364,16 @@ static site the agent built to a permanent public URL at
 template writes no credential or header. Free sites are public, so do not
 publish secrets.
 
-The first `publish_site` call returns an owner token once. The model passes it
-as the `token` argument to `update_site`, `list_sites`, `delete_site`,
-`list_versions`, and `restore_version`; `get_site` needs no token. Run zot with
+The first `publish_site` call returns an owner token once. Save it in private,
+durable storage, such as `~/.config/deed-page/token` (directory mode `0700`,
+file mode `0600` on Unix), and load it for later sessions. The bridge does not
+save this token automatically. Never put it in published files, a repository,
+or logs. Without a recovery email, losing the token permanently removes your
+ability to manage those sites, even though they remain online.
+
+The model passes the token as the `token` argument to `update_site`,
+`list_sites`, `delete_site`, `list_versions`, and `restore_version`.
+`get_site` needs no token. Run zot with
 `--no-yolo` to approve each publish, update, or delete.
 
 The model reaches these tools through `mcp__search_tools`. For agents that
